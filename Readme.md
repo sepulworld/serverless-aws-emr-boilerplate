@@ -15,39 +15,39 @@ SNS message body contains the [EMR Step(s)](https://docs.aws.amazon.com/emr/late
 ```json
    {
         "Name": "MySparkJob-SilverMullet-step1",
-        'ActionOnFailure': 'TERMINATE_JOB_FLOW',
-        'HadoopJarStep': {
-            'Jar': 'command-runner.jar',
-            'Args': [
-                'spark-submit',
-                '--deploy-mode',
-                'cluster',
-                '--class',
-                'com.zane.silvermullet.batch.jobs.DataProcessor',
-                '--executor-memory',
+        "ActionOnFailure": "TERMINATE_JOB_FLOW""
+        'HadoopJarStep": {
+            "Jar": "command-runner.jar",
+            "Args": [
+                "spark-submit",
+                "--deploy-mode",
+                "cluster",
+                "--class",
+                "com.zane.silvermullet.batch.jobs.DataProcessor",
+                "--executor-memory",
                 20G,
-                '--executor-cores',
+                "--executor-cores",
                 100,
-                s3://silvermullet-code-bucket/source/latest/spark.jar
+                "s3://silvermullet-code-bucket/source/latest/spark.jar"
             ]
         }
     },
     {
         "Name": "MySparkJob-SilverMullet-step2",
-        'ActionOnFailure': 'TERMINATE_JOB_FLOW',
-        'HadoopJarStep': {
-            'Jar': 'command-runner.jar',
-            'Args': [
-                'spark-submit',
-                '--deploy-mode',
-                'cluster',
-                '--class',
-                'com.zane.silvermullet.batch.jobs.DataProcessor2',
-                '--executor-memory',
+        "ActionOnFailure": "TERMINATE_JOB_FLOW",
+        "HadoopJarStep": {
+            "Jar": "command-runner.jar",
+            "Args": [
+                "spark-submit",
+                "--deploy-mode",
+                "cluster",
+                "--class",
+                "com.zane.silvermullet.batch.jobs.DataProcessor2",
+                "--executor-memory",
                 20G,
-                '--executor-cores',
+                "--executor-cores",
                 100,
-                s3://silvermullet-code-bucket/source/latest/spark.jar
+                "s3://silvermullet-code-bucket/source/latest/spark.jar"
             ]
         }
     }
