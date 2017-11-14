@@ -43,8 +43,8 @@ provider:
     bid_percent: 95.0
 
 functions:
-  emr_launcher:
-    handler: emr_launcher.emr_launcher
+  emr_launcher_sns:
+    handler: emr_launcher_sns.emr_launcher
     events:
       - sns: emr-step-launcher
 
