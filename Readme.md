@@ -12,6 +12,7 @@ function code to reference: emr_launcher_sns.py
 
 SNS message body contains the [EMR Step(s)](https://docs.aws.amazon.com/emr/latest/DeveloperGuide//emr-steps.html) to run
 
+* Message body with Steps will be run on the EMR cluster launched
 ```json
    {
         "Name": "MySparkJob-SilverMullet-step1",
@@ -27,7 +28,7 @@ SNS message body contains the [EMR Step(s)](https://docs.aws.amazon.com/emr/late
                 "--executor-memory",
                 "20G",
                 "--executor-cores",
-                100,
+                "100",
                 "s3://silvermullet-code-bucket/source/latest/spark.jar"
             ]
         }
@@ -46,16 +47,16 @@ SNS message body contains the [EMR Step(s)](https://docs.aws.amazon.com/emr/late
                 "--executor-memory",
                 "20G",
                 "--executor-cores",
-                100,
+                "100",
                 "s3://silvermullet-code-bucket/source/latest/spark.jar"
             ]
         }
     }
 ```
 
-SNS triggers --> AWS emr_launcher_sns.py
+![SNS](https://user-images.githubusercontent.com/538171/32757537-d77dca4e-c894-11e7-8430-da55b10207b6.png) -> ![lambda](https://user-images.githubusercontent.com/538171/32757574-0aa0adba-c895-11e7-8bd1-68ad1e0c2b66.png) -> ![emr](https://user-images.githubusercontent.com/538171/32757613-30e0d6da-c895-11e7-8d01-1880de81e68a.png)
 
-* message body with Steps will be run on the EMR cluster launched
+
 
 #### EMR configuration notes
 
