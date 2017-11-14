@@ -25,7 +25,7 @@ SNS message body contains the [EMR Step(s)](https://docs.aws.amazon.com/emr/late
                 "--class",
                 "com.zane.silvermullet.batch.jobs.DataProcessor",
                 "--executor-memory",
-                20G,
+                "20G",
                 "--executor-cores",
                 100,
                 "s3://silvermullet-code-bucket/source/latest/spark.jar"
@@ -44,7 +44,7 @@ SNS message body contains the [EMR Step(s)](https://docs.aws.amazon.com/emr/late
                 "--class",
                 "com.zane.silvermullet.batch.jobs.DataProcessor2",
                 "--executor-memory",
-                20G,
+                "20G",
                 "--executor-cores",
                 100,
                 "s3://silvermullet-code-bucket/source/latest/spark.jar"
