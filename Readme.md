@@ -1,4 +1,4 @@
-### Serverless AWS EMR Boilerplate
+# Serverless AWS EMR Boilerplate
 
 This is a [Serverless](https://www.npmjs.com/package/serverless) boilerplate setup meant to demo multiple ways in which you can provision [AWS EMR](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-what-is-emr.html) on-demand through the following triggers:
 
@@ -6,7 +6,7 @@ This is a [Serverless](https://www.npmjs.com/package/serverless) boilerplate set
 * [AWS S3](https://serverless.com/framework/docs/providers/aws/events/s3/)
 * [AWS API Gateway](https://serverless.com/framework/docs/providers/aws/events/apigateway/)
 
-#### AWS SNS
+### AWS SNS
 
 ## ![messaging_amazonsns](https://user-images.githubusercontent.com/538171/32766496-0a0ee9a0-c8c4-11e7-927e-165336a46310.png) ---> ![compute_awslambda_lambdafunction](https://user-images.githubusercontent.com/538171/32766526-3cc3a228-c8c4-11e7-949d-c08d9e7e9719.png) ---> ![analytics_amazonemr_cluster](https://user-images.githubusercontent.com/538171/32766582-89f244fa-c8c4-11e7-8099-7373c944949e.png)
 
