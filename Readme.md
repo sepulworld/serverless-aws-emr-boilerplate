@@ -15,8 +15,8 @@ SNS message body contains the [EMR Step(s)](https://docs.aws.amazon.com/emr/late
 ```json
    {
         "Name": "MySparkJob-SilverMullet-step1",
-        "ActionOnFailure": "TERMINATE_JOB_FLOW""
-        'HadoopJarStep": {
+        "ActionOnFailure": "TERMINATE_JOB_FLOW",
+        "HadoopJarStep": {
             "Jar": "command-runner.jar",
             "Args": [
                 "spark-submit",
