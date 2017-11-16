@@ -16,7 +16,7 @@ SNS message body contains the [EMR Step(s)](https://docs.aws.amazon.com/emr/late
 
 * Message body of SNS to contain comma separated string of args to pass to EMR Step
 ```json
-"arg1,arg2"
+"s3://silvermullet-data-bucket/input/,s3://silvermullet-data-bucket/output/"
 ```
 
 #### EMR configuration notes

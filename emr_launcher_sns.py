@@ -55,7 +55,7 @@ sample event data
 http://docs.aws.amazon.com/lambda/latest/dg/eventsources.html#eventsources-sns
 The sns message should be a comma seperated string of args we can append to the
 EMR step. This maybe s3 prefix location where input data is and where to output
-ie "/data/input/,"
+ie "s3://silvermullet-data-bucket/input/,s3://silvermullet-data-bucket/output/"
     """
 
     client = boto3.client('emr')
