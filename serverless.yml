@@ -32,26 +32,31 @@ provider:
         - "elasticmapreduce:TerminateJobFlows"
 
   environment:
-    master_instance_type: 'm4.xlarge'
-    core_instance_type: 'c4.2xlarge'
+    master_instance_type: "m4.xlarge"
+    core_instance_type: "c4.2xlarge"
     core_instance_count: 10
-    core_instance_fallback_type: 'm4.4xlarge'
+    core_instance_fallback_type: "m4.4xlarge"
     core_instance_fallback_count: 30
-    key_name: 'my-dev-pem'
-    release_label: 'emr-5.1.0'
+    key_name: "my-dev-pem"
+    release_label: "emr-5.1.0"
     emr_name: ${self:service}-${opt:stage, self:provider.stage}
     bid_percent: 95.0
+    jar_class: "com.silvermullet.powermullet"
+    jar_location: "s3://<your_code_bucket>/${opt:stage, self:provider.stage}/myjar"
+    env: ${opt:stage, self:provider.stage}
+    spark_executor_memory: "20G"
+    spark_executor_cores: "2"
 
 functions:
   emr_launcher_sns:
     handler: emr_launcher_sns.emr_launcher
     events:
-      - sns: emr-step-launcher
+      - sns: emr-step-launcher-${self:provider.environment}
 
 resources:
   Resources:
     NewResource:
       Type: AWS::SNS::Topic
       Properties:
-        DisplayName: emr-step-launcher
-        TopicName: emr-step-launcher
+        DisplayName: emr-step-launcher-${self:provider.environment}
+        TopicName: emr-step-launcher-${self:provider.environment}

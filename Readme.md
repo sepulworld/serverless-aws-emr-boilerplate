@@ -14,46 +14,9 @@ function code to reference: emr_launcher_sns.py
 
 SNS message body contains the [EMR Step(s)](https://docs.aws.amazon.com/emr/latest/DeveloperGuide//emr-steps.html) to run
 
-* Message body with Steps will be run on the EMR cluster launched
+* Message body of SNS to contain comma separated string of args to pass to EMR Step
 ```json
-   {
-        "Name": "MySparkJob-SilverMullet-step1",
-        "ActionOnFailure": "TERMINATE_JOB_FLOW",
-        "HadoopJarStep": {
-            "Jar": "command-runner.jar",
-            "Args": [
-                "spark-submit",
-                "--deploy-mode",
-                "cluster",
-                "--class",
-                "com.zane.silvermullet.batch.jobs.DataProcessor",
-                "--executor-memory",
-                "20G",
-                "--executor-cores",
-                "100",
-                "s3://silvermullet-code-bucket/source/latest/spark.jar"
-            ]
-        }
-    },
-    {
-        "Name": "MySparkJob-SilverMullet-step2",
-        "ActionOnFailure": "TERMINATE_JOB_FLOW",
-        "HadoopJarStep": {
-            "Jar": "command-runner.jar",
-            "Args": [
-                "spark-submit",
-                "--deploy-mode",
-                "cluster",
-                "--class",
-                "com.zane.silvermullet.batch.jobs.DataProcessor2",
-                "--executor-memory",
-                "20G",
-                "--executor-cores",
-                "100",
-                "s3://silvermullet-code-bucket/source/latest/spark.jar"
-            ]
-        }
-    }
+"arg1,arg2"
 ```
 
 #### EMR configuration notes
