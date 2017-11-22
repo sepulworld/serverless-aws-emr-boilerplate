@@ -30,16 +30,20 @@ provider:
         - "elasticmapreduce:SetTerminationProtection"
         - "elasticmapreduce:SetVisibleToAllUsers"
         - "elasticmapreduce:TerminateJobFlows"
+        - "iam:PassRole"
+      Resource:
+        - "*"
 
   environment:
-    master_instance_type: "m4.xlarge"
-    core_instance_type: "c4.2xlarge"
+    master_instance_type: "m3.xlarge"
+    core_instance_type: "c3.2xlarge"
     core_instance_count: 10
-    core_instance_fallback_type: "m4.4xlarge"
+    core_instance_fallback_type: "r3.2xlarge"
     core_instance_fallback_count: 30
     key_name: "my-dev-pem"
     release_label: "emr-5.1.0"
     emr_name: ${self:service}-${opt:stage, self:provider.stage}
+    emr_loguri: 's3://CHANGEMETOYOURBUCKET/logs'
     bid_percent: 95.0
     jar_class: "com.silvermullet.powermullet"
     jar_location: "s3://<your_code_bucket>/${opt:stage, self:provider.stage}/myjar"
@@ -52,11 +56,3 @@ functions:
     handler: emr_launcher_sns.emr_launcher
     events:
       - sns: emr-step-launcher-${self:provider.environment}
-
-resources:
-  Resources:
-    NewResource:
-      Type: AWS::SNS::Topic
-      Properties:
-        DisplayName: emr-step-launcher-${self:provider.environment}
-        TopicName: emr-step-launcher-${self:provider.environment}
