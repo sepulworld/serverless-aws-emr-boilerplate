@@ -24,8 +24,7 @@ See launch_emr_via_sns folder
 ### AWS API Gateway Proxy Event Trigger EMR
 
 ##
-![mobileservices_amazonapigateway](https://user-images.githubusercontent.com/538171/33153525-1c471212-cf97-11e7-9c46-7297a2f95b4b.png) --->
-![compute_awslambda_lambdafunction](https://user-images.githubusercontent.com/538171/32766526-3cc3a228-c8c4-11e7-949d-c08d9e7e9719.png) ---> ![analytics_amazonemr_cluster](https://user-images.githubusercontent.com/538171/32766582-89f244fa-c8c4-11e7-8099-7373c944949e.png)
+![api_gateway_to_emr](https://user-images.githubusercontent.com/538171/33154005-33fbb996-cf9a-11e7-9e20-64144484d276.png)
 
 Event driven by API gateway GET query with 'input' and 'output' query parameters for EMR step to work with.
 https://docs.aws.amazon.com/lambda/latest/dg/eventsources.html#eventsources-api-gateway-request
