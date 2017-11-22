@@ -6,7 +6,7 @@ This is a [Serverless](https://www.npmjs.com/package/serverless) boilerplate set
 * [AWS S3 Event in Serverless](https://serverless.com/framework/docs/providers/aws/events/s3/)
 * [AWS API Gateway HTTP Event in Serverless](https://serverless.com/framework/docs/providers/aws/events/apigateway/)
 
-### AWS SNS Event Trigger EMR
+### [AWS SNS Event Trigger EMR](https://github.com/sepulworld/serverless-aws-emr-boilerplate/tree/master/launch_emr_via_sns)
 
 ##
 ![sns_to_emr](https://user-images.githubusercontent.com/538171/33153928-a7a92f50-cf99-11e7-9374-1384217cd32b.png)
@@ -21,7 +21,7 @@ SNS message body contains the input and output data parameters for [EMR Step](ht
 See launch_emr_via_sns folder
 
 
-### AWS API Gateway Proxy Event Trigger EMR
+### [AWS API Gateway Proxy Event Trigger EMR](https://github.com/sepulworld/serverless-aws-emr-boilerplate/tree/master/launch_emr_via_api_gateway)
 
 ##
 ![api_gateway_to_emr](https://user-images.githubusercontent.com/538171/33154005-33fbb996-cf9a-11e7-9e20-64144484d276.png)
