@@ -9,7 +9,7 @@ This is a [Serverless](https://www.npmjs.com/package/serverless) boilerplate set
 ### AWS SNS Event Trigger EMR
 
 ##
-![sns_to_emr](https://user-images.githubusercontent.com/538171/33153864-599a9240-cf99-11e7-9bc6-c102283672eb.png)
+![sns_to_emr](https://user-images.githubusercontent.com/538171/33153928-a7a92f50-cf99-11e7-9374-1384217cd32b.png)
 
 SNS message body contains the input and output data parameters for [EMR Step](https://docs.aws.amazon.com/emr/latest/DeveloperGuide//emr-steps.html) to run
 
