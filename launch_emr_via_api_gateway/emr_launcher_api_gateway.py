@@ -9,26 +9,22 @@ logger.setLevel(logging.INFO)
 
 master_instance_type = os.environ.get('master_instance_type')
 core_instance_type = os.environ.get('core_instance_type')
-core_instance_count = os.environ.get('core_instance_count')
+core_instance_count = int(os.environ.get('core_instance_count'))
 core_instance_fallback_type = os.environ.get('core_instance_fallback_type')
-core_instance_fallback_count = os.environ.get('core_instance_fallback_count')
+core_instance_fallback_count = int(
+    os.environ.get('core_instance_fallback_count'))
 key_name = os.environ.get('key_name')
 release_label = os.environ.get('release_label')
 emr_name = os.environ.get('emr_name')
-bid_percent = os.environ.get('bid_percent')
+bid_percent = int(os.environ.get('bid_percent'))
 date_key = (datetime.date.today()).strftime('%Y%m%d')
 env = os.environ.get('env')
-jar_class = os.environ.get('jar_class')
+python_spark_script = os.environ.get('python_spark_script')
 spark_executor_cores = os.environ.get('spark_executor_cores')
 spark_executor_memory = os.environ.get('spark_executor_memory')
 
-def create_emr_python_wordcount_step(additional_args):
+def create_emr_python_wordcount_step():
     """Generate a python test step
-aws sns publish \
-  --topic-arn \
-  "arn:aws:sns:us-west-2:12345678910:emr-step-launcher-dev" \
-  --message \
-  "s3://yous3bucket/dev/moby_dick.txt,s3://yours3bucket/dev/moby_dick_output/"
     """
     step = {
         "Name": "python-wordcount-{}".format(env),
@@ -49,32 +45,32 @@ aws sns publish \
                 spark_executor_memory,
                 "--executor-cores",
                 spark_executor_cores,
-                "https://gist.github.com/sepulworld/51fbd6757d3571df0ecb19cc0c1c7403"
+                python_spark_script
             ]
         }
     }
 
-    for i in additional_args:
-        step['HadoopJarStep']['Args'].append(i)
-        logger.info('Generated step: {}'.format(step))
-
     return step
 
 def emr_launcher(event, context):
-    """Launcer funtion for EMR on-demand cluster
-sample event data
-http://docs.aws.amazon.com/lambda/latest/dg/eventsources.html#eventsources-sns
-The sns message should be a comma seperated string of args we can append to the
-EMR step. This maybe s3 prefix location where input data is and where to output
-ie "s3://silvermullet-data-bucket/input/,s3://silvermullet-data-bucket/output/"
-    """
+    """Launcher function for EMR on-demand cluster
+sample event API gatway GET query with 'input' and 'output' query parameters
+https://docs.aws.amazon.com/lambda/latest/dg/eventsources.html#eventsources-api-gateway-request
+
+curl --header 'X-Api-Key: YOUR_API_KEY_SERVERLESS_CREATES \
+  https://serverlessendpoint.aws.com/launch_emr_wordcount?input=s3://silvermullet-data-bucket/input/?output=s3://silvermullet-data-bucket/output/
+
+We expect and input and output query parameter and will append to the EMR step
+"""
 
     client = boto3.client('emr')
-    sns_event_message = event['Records'][0]['Sns']['Message']
-    additional_args = [x for x in sns_event_message.split(',')]
-    logger.info("Complete SNS event: {}".format(event))
-    logger.info("Sns message received: {}".format(sns_event_message))
-    logger.info("Parsed message into args: {}".format(additional_args))
+    step = create_emr_python_wordcount_step()
+    step['HadoopJarStep']['Args'].append(
+        event['queryStringParameters']['input'])
+    step['HadoopJarStep']['Args'].append(
+        event['queryStringParameters']['output'])
+    logger.info("Step to run: {}".format(step))
+    logger.info("API Gateway message received: {}".format(event))
 
     cluster = client.run_job_flow(
         Name=emr_name,
@@ -129,7 +125,7 @@ ie "s3://silvermullet-data-bucket/input/,s3://silvermullet-data-bucket/output/"
             ],
             'Ec2KeyName': key_name,
             },
-        Steps=[create_emr_python_wordcount_step(additional_args)]
+        Steps=[create_emr_python_wordcount_step()]
     )
 
     logger.info('EMR cluster launched: {}'.format(cluster))

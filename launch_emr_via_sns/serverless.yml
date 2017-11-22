@@ -1,0 +1,57 @@
+service: serverless-aws-emr-sns
+
+provider:
+  name: aws
+  runtime: python3.6
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:List*"
+        - "s3:Get*"
+      Resource:
+        - "arn:aws:s3:::<your_code_bucket>"
+        - "arn:aws:s3:::<your_code_bucket>/*"
+    - Effect: "Allow"
+      Action:
+        - "elasticmapreduce:AddInstanceGroups"
+        - "elasticmapreduce:AddTags"
+        - "elasticmapreduce:AddJobFlowSteps"
+        - "elasticmapreduce:DescribeCluster"
+        - "elasticmapreduce:DescribeJobFlows"
+        - "elasticmapreduce:DescribeStep"
+        - "elasticmapreduce:ListBootstrapActions"
+        - "elasticmapreduce:ListClusters"
+        - "elasticmapreduce:ListInstanceGroups"
+        - "elasticmapreduce:ListInstances"
+        - "elasticmapreduce:ModifyInstanceGroups"
+        - "elasticmapreduce:RemoveTags"
+        - "elasticmapreduce:RunJobFlow"
+        - "elasticmapreduce:SetTerminationProtection"
+        - "elasticmapreduce:SetVisibleToAllUsers"
+        - "elasticmapreduce:TerminateJobFlows"
+        - "iam:PassRole"
+      Resource:
+        - "*"
+
+  environment:
+    master_instance_type: "m3.xlarge"
+    core_instance_type: "c3.2xlarge"
+    core_instance_count: 10
+    core_instance_fallback_type: "r3.2xlarge"
+    core_instance_fallback_count: 30
+    key_name: "my-dev-pem"
+    release_label: "emr-5.1.0"
+    emr_name: ${self:service}-${opt:stage, self:provider.stage}
+    emr_loguri: 's3://CHANGEMETOYOURBUCKET/logs'
+    bid_percent: 95.0
+    python_spark_script: "https://gist.github.com/sepulworld/51fbd6757d3571df0ecb19cc0c1c7403"
+    env: ${opt:stage, self:provider.stage}
+    spark_executor_memory: "20G"
+    spark_executor_cores: "2"
+
+functions:
+  emr_launcher_sns:
+    handler: emr_launcher_sns.emr_launcher
+    events:
+      - sns: emr-step-launcher-${self:provider.environment}

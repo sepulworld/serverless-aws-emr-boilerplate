@@ -1,8 +1,10 @@
-service: serverless-aws-emr-boilerplate
+service: serverless-aws-emr-api-gateway
 
 provider:
   name: aws
   runtime: python3.6
+  apiKeys:
+    - my_api_key
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -45,14 +47,16 @@ provider:
     emr_name: ${self:service}-${opt:stage, self:provider.stage}
     emr_loguri: 's3://CHANGEMETOYOURBUCKET/logs'
     bid_percent: 95.0
-    jar_class: "com.silvermullet.powermullet"
-    jar_location: "s3://<your_code_bucket>/${opt:stage, self:provider.stage}/myjar"
+    python_spark_script: "https://gist.github.com/sepulworld/51fbd6757d3571df0ecb19cc0c1c7403"
     env: ${opt:stage, self:provider.stage}
     spark_executor_memory: "20G"
     spark_executor_cores: "2"
 
 functions:
-  emr_launcher_sns:
-    handler: emr_launcher_sns.emr_launcher
+  emr_launcher_api_gateway:
+    handler: emr_launcher_api_gateway.emr_launcher
     events:
-      - sns: emr-step-launcher-${self:provider.environment}
+      - http:
+          path: launch_emr_wordcount
+          method: get
+          private: true
